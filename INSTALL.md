@@ -36,3 +36,15 @@ After creating the environment, activate it with:
 ```bash
 conda activate faiss-dev
 ```
+
+
+## Running Jupyter Lab
+
+To work with the project, open this folder through Jupyter Lab:
+
+```bash
+jupyter lab
+```
+
+This will start the Jupyter Lab server and open it in your default web browser, allowing you to work with notebooks and explore the project files.
+
