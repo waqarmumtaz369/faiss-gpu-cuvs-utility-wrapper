@@ -25,8 +25,7 @@ conda create -n faiss-dev -y \
     -c pytorch -c nvidia -c rapidsai -c conda-forge \
     python=3.11 \
     libnvjitlink \
-    faiss-gpu-cuvs=1.12.0 \
-    jupyterlab ipykernel
+    faiss-gpu-cuvs=1.12.0
 ```
 
 ## Next Steps
@@ -36,15 +35,3 @@ After creating the environment, activate it with:
 ```bash
 conda activate faiss-dev
 ```
-
-
-## Running Jupyter Lab
-
-To work with the project, open this folder through Jupyter Lab:
-
-```bash
-jupyter lab
-```
-
-This will start the Jupyter Lab server and open it in your default web browser, allowing you to work with notebooks and explore the project files.
-
