@@ -28,6 +28,31 @@ conda create -n faiss-dev -y \
     faiss-gpu-cuvs=1.12.0
 ```
 
+## C++ Development Setup
+
+For C++ development with FAISS GPU support, install additional CUDA development packages:
+
+```bash
+conda install -c nvidia cuda-nvcc cuda-cudart-dev
+```
+
+**Note:** The `faiss-gpu-cuvs` package uses NVIDIA's cuVS libraries instead of traditional `libfaiss_gpu` for GPU acceleration.
+
+## Compilation and Runtime
+
+### Compile C++ code:
+```bash
+g++ -I$CONDA_PREFIX/include -L$CONDA_PREFIX/lib -Wl,-rpath,$CONDA_PREFIX/lib -o faiss-gpu faiss-gpu.cpp -lfaiss -lcuvs
+```
+
+The `-Wl,-rpath,$CONDA_PREFIX/lib` flag embeds the library path, eliminating the need for runtime library path configuration.
+
+### Alternative compilation (requires runtime setup):
+```bash
+g++ -I$CONDA_PREFIX/include -L$CONDA_PREFIX/lib -o faiss-gpu faiss-gpu.cpp -lfaiss -lcuvs
+sudo ldconfig $CONDA_PREFIX/lib
+```
+
 ## Next Steps
 
 After creating the environment, activate it with:
