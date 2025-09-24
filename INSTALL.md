@@ -33,25 +33,38 @@ conda create -n faiss-dev -y \
 For C++ development with FAISS GPU support, install additional CUDA development packages:
 
 ```bash
-conda install -c nvidia cuda-nvcc cuda-cudart-dev
+conda install -c nvidia cuda-nvcc cuda-cudart-dev libcudacxx
 ```
 
 **Note:** The `faiss-gpu-cuvs` package uses NVIDIA's cuVS libraries instead of traditional `libfaiss_gpu` for GPU acceleration.
 
 ## Compilation and Runtime
 
-### Compile C++ code:
+### Compile C++ code (with RMM support):
 ```bash
-g++ -I$CONDA_PREFIX/include -L$CONDA_PREFIX/lib -Wl,-rpath,$CONDA_PREFIX/lib -o faiss-gpu faiss-gpu.cpp -lfaiss -lcuvs
+g++ -I$CONDA_PREFIX/include -L$CONDA_PREFIX/lib -Wl,-rpath,$CONDA_PREFIX/lib \
+    -DLIBCUDACXX_ENABLE_EXPERIMENTAL_MEMORY_RESOURCE \
+    -o faiss-gpu faiss-gpu.cpp -lfaiss -lcuvs -lrmm
 ```
 
 The `-Wl,-rpath,$CONDA_PREFIX/lib` flag embeds the library path, eliminating the need for runtime library path configuration.
 
 ### Alternative compilation (requires runtime setup):
 ```bash
-g++ -I$CONDA_PREFIX/include -L$CONDA_PREFIX/lib -o faiss-gpu faiss-gpu.cpp -lfaiss -lcuvs
+g++ -I$CONDA_PREFIX/include -L$CONDA_PREFIX/lib -o faiss-gpu faiss-gpu.cpp -lfaiss -lcuvs -lrmm
 sudo ldconfig $CONDA_PREFIX/lib
 ```
+
+### RMM Header Usage
+
+When using RMM headers in your C++ code, use the correct paths:
+
+```cpp
+#include <rmm/mr/device/device_memory_resource.hpp>
+#include <rmm/mr/device/per_device_resource.hpp>
+```
+
+**Note:** RMM headers are located in the `device/` subdirectory, not directly in `mr/`.
 
 ## Next Steps
 

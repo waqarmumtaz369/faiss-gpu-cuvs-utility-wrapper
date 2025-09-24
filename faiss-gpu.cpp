@@ -15,6 +15,9 @@
  #include <faiss/gpu/GpuIndexIVFFlat.h>
  #include <faiss/gpu/StandardGpuResources.h>
  
+ #include <rmm/mr/device/device_memory_resource.hpp>
+ #include<rmm/mr/device/per_device_resource.hpp>
+
  int main() {
      int d = 64;      // dimension
      int nb = 100000; // database size
